@@ -36,14 +36,13 @@ export const parseError = (error: string | IError | IError[]): string => {
 };
 
 /** @namespace Graphql/Middleware/Magento/Index/parseResponse */
-export const parseResponse = async (pendingResponse: Promise<Response>): Promise<unknown> => {
+export const parseResponse = async (response: MagentoGraphQlResponse): Promise<unknown> => {
     try {
-        const response = await pendingResponse;
-        const json = await response.json() as MagentoGraphQlResponse;
-
-        return checkForErrors(json);
+        return checkForErrors(response);
     } catch (e) {
         // throw new, formatted error instead
         throw new Error(parseError(e));
     }
 };
+
+export default parseResponse;

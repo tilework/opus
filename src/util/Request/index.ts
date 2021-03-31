@@ -1,5 +1,9 @@
 import { RequestOptions } from '../..';
-import { GraphQLDocument } from '../Query/prepareDocument';
+import { GraphQLDocument } from './prepareDocument';
+
+if (typeof fetch === 'undefined') {
+    var fetch = require('node-fetch');
+}
 
 /** @namespace Graphql/Util/Request/Index/processHeaders */
 export const processHeaders = (headers: any, options: RequestOptions): any => {
@@ -32,7 +36,7 @@ export const postFetch = (
 export const executePost = (
     queryObject: GraphQLDocument,
     options: RequestOptions
-): unknown => {
+) => {
     const { query, variables } = queryObject;
 
     return postFetch(query, variables, options);

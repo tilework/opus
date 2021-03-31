@@ -1,14 +1,8 @@
 {
-    "name": "@scandipwa/graphql",
-    "version": "0.0.0",
-    "license": "OSL-3.0",
+    "name": "@plugjs/graphql-client",
+    "version": "0.0.1",
+    "license": "MIT",
     "main": "src/index.ts",
-    "scandipwa": {
-        "type": "extension"
-    },
-    "eslintConfig": {
-        "extends": "@scandipwa"
-    },
     "dependencies": {},
     "devDependencies": {
         "@types/node": "^14.14.37"

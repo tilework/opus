@@ -3,7 +3,7 @@ import type { Field } from './util/Query/Field';
 import {
     GraphQlRequestType,
     prepareRequest
-} from './util/Query/prepareDocument';
+} from './util/Request/prepareDocument';
 import { executePost } from './util/Request';
 
 export type ResponseParser = (response: any) => unknown;
@@ -38,7 +38,7 @@ export class Client {
             }
         );
 
-        const parsedResponse = this.options.middleware!(response);
+        const parsedResponse = this.options.middleware!(await response.json());
 
         if (rawField instanceof CombinedField) {
             return parsedResponse as Promise<RT>;
@@ -65,7 +65,7 @@ export class Client {
     postQuery<N extends string, RT>(
         rawQueries: Field<N, RT>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<{ [k in N]: RT; }>;
+    ): Promise<{ [k in N]: RT[]; }>;
 
     postQuery<RT>(
         rawQueries: CombinedField<RT>,

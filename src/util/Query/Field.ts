@@ -32,7 +32,7 @@ export class Field<
 
     args: Argument[] = [];
 
-    resultTypeHolder: RT;
+    resultTypeHolder: RT = {} as RT;
 
     constructor(name: N) {
         this.name = name;

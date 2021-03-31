@@ -52,11 +52,11 @@ beardedperson.resultTypeHolder.moustache; // Fragment
 // * Results *
 
 /** Query result checks */
-Client.postQuery(beardedperson, {}).then((result) => {
+Client.postQuery(beardedperson).then((result) => {
     result
 });
 
 /** Combined query result checks */
-Client.postQuery(combined, {}).then((result) => {
+Client.postQuery(combined).then((result) => {
     result
 });

@@ -15,7 +15,7 @@ export const processHeaders = (headers: any, options: RequestOptions): any => {
 export const postFetch = (
     query: string,
     variables: GraphQLDocument['variables'],
-    options: RequestOptions = {}
+    options: RequestOptions
 ): Promise<Response> => fetch(
     options.endpoint,
     {

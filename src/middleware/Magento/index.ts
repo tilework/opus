@@ -14,18 +14,22 @@ export const checkForErrors = (res: MagentoGraphQlResponse): unknown | never => 
     return data;
 };
 
+interface IError {
+    message: string
+}
+
 /** @namespace Graphql/Middleware/Magento/Index/parseError */
-export const parseError = (error: Error): string => {
+export const parseError = (error: string | IError | IError[]): string => {
     if (typeof error === 'string') {
         return error;
     }
 
-    if (error.message) {
-        return error.message;
+    if (Array.isArray(error)) {
+        return error[0].message;
     }
 
-    if (error[0].message) {
-        return error[0].message;
+    if (error.message) {
+        return error.message;
     }
 
     return 'Something went wrong';

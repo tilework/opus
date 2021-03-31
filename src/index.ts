@@ -9,7 +9,7 @@ import { executePost } from './util/Request';
 export type ResponseParser = (response: any) => unknown;
 
 export type RequestOptions = {
-    endpoint?: string,
+    endpoint: string,
     headers?: any,
     middleware?: ResponseParser
 };
@@ -21,12 +21,12 @@ export const defaultOptions: RequestOptions = {
 
 /** @namespace Graphql/Index/Client */
 export class Client {
-    protected options?: RequestOptions = defaultOptions;
+    protected options: RequestOptions = defaultOptions;
 
     protected post = async <N extends string, RT>(
         rawField: Field<N, RT> | CombinedField<RT>,
-        options: RequestOptions,
-        requestType: GraphQlRequestType
+        requestType: GraphQlRequestType,
+        overrideOptions?: Partial<RequestOptions>
     ) => {
         const fieldArray = rawField instanceof CombinedField ? rawField.fields : [rawField];
 
@@ -34,11 +34,11 @@ export class Client {
             prepareRequest(fieldArray, requestType),
             {
                 ...this.options,
-                ...options
+                ...(overrideOptions || {})
             }
         );
 
-        const parsedResponse = this.options.middleware(response);
+        const parsedResponse = this.options.middleware!(response);
 
         if (rawField instanceof CombinedField) {
             return parsedResponse as Promise<RT>;
@@ -64,31 +64,31 @@ export class Client {
     // ** Query **
     postQuery<N extends string, RT>(
         rawQueries: Field<N, RT>,
-        options: RequestOptions
+        overrideOptions?: Partial<RequestOptions>
     ): Promise<{ [k in N]: RT; }>;
 
     postQuery<RT>(
         rawQueries: CombinedField<RT>,
-        options: RequestOptions
+        overrideOptions?: Partial<RequestOptions>
     ): Promise<RT>;
 
-    postQuery(rawQueries, options) {
-        return this.post(rawQueries, options, GraphQlRequestType.Query);
+    postQuery(rawQueries, overrideOptions) {
+        return this.post(rawQueries, GraphQlRequestType.Query, overrideOptions);
     }
 
     // ** Mutation **
     postMutation<N extends string, RT>(
         rawMutations: Field<N, RT>,
-        options: RequestOptions
+        overrideOptions?: Partial<RequestOptions>
     ): Promise<{ [k in N]: RT; }>;
 
     postMutation<RT>(
         rawMutations: CombinedField<RT>,
-        options: RequestOptions
+        overrideOptions?: Partial<RequestOptions>
     ): Promise<RT>;
 
-    postMutation<N extends string, RT>(rawMutations, options) {
-        return this.post(rawMutations, options, GraphQlRequestType.Mutation)
+    postMutation<N extends string, RT>(rawMutations, overrideOptions) {
+        return this.post(rawMutations, GraphQlRequestType.Mutation, overrideOptions)
     };
 }
 

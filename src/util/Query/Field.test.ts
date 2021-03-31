@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Client, { Field } from '../../..';
 import CombinedField from './CombinedField';
 import { InlineFragment } from './InlineFragment';

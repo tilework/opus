@@ -1,8 +1,8 @@
-import { Argument, Field } from './Field';
+import { Argument, Field } from '../Query/Field';
 
 export enum GraphQlRequestType {
-    Mutation,
-    Query
+    Mutation = 'mutation',
+    Query = 'query'
 }
 interface AccArgs {
     [name: string]: Array<[string, string]>

@@ -49,11 +49,12 @@ export class Field<
         return this as unknown as Field<A, RT>;
     }
 
-    addArgument(name: string, type: string, value: string): Field<N, RT> {
+    addArgument(name: string, type: string, value: any): Field<N, RT> {
         if (value === undefined) {
             // allow passing in all potential arguments
             return this;
         }
+
         this.args.push({
             name,
             type,

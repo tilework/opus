@@ -83,7 +83,7 @@ export class Field<
     // FIELD
     addField<S extends string, IRT, F extends Field<S, IRT>>(field: F): Field<
         N,
-        RT & { [K in F['name']]: F['resultTypeHolder'] }
+        RT & { [K in F['name']]: F['resultTypeHolder'][] }
     >;
     // !
 
@@ -104,7 +104,8 @@ export class Field<
         N,
         RT & { [K in S]: FetchedFieldItemType }
     > {
-        fieldList.forEach(this.addField);
+        fieldList.forEach(this.addField.bind(this));
+
         return this as unknown as Field<
             N,
             RT & { [K in S]: FetchedFieldItemType }

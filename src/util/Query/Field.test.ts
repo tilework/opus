@@ -1,4 +1,4 @@
-import Client, { Field } from '../../..';
+import Client, { Field } from '../..';
 import CombinedField from './CombinedField';
 import { InlineFragment } from './InlineFragment';
 

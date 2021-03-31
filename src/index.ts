@@ -72,7 +72,7 @@ export class Client {
         overrideOptions?: Partial<RequestOptions>
     ): Promise<RT>;
 
-    postQuery(rawQueries, overrideOptions) {
+    postQuery(rawQueries: any, overrideOptions: any) {
         return this.post(rawQueries, GraphQlRequestType.Query, overrideOptions);
     }
 
@@ -87,7 +87,7 @@ export class Client {
         overrideOptions?: Partial<RequestOptions>
     ): Promise<RT>;
 
-    postMutation<N extends string, RT>(rawMutations, overrideOptions) {
+    postMutation<N extends string, RT>(rawMutations: any, overrideOptions: any) {
         return this.post(rawMutations, GraphQlRequestType.Mutation, overrideOptions)
     };
 }

@@ -2,7 +2,7 @@
     "name": "@plugjs/graphql-client",
     "version": "0.0.1",
     "license": "MIT",
-    "main": "src/index.ts",
+    "main": "dist/index.js",
     "scripts": {
         "compile": "tsc --build tsconfig.json"
     },

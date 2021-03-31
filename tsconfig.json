@@ -1,26 +1,31 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "lib": [
-            "esnext",
-            "dom",
-            "dom.iterable",
-        ],
-        "module": "esnext",
-        "noImplicitAny": false,
-        "allowJs": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "outDir": "dist"
-    },
-    "include": [
-        "src"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
     ],
+    "checkJs": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": false,
+    "isolatedModules": true,
+
+    "strict": true,
+
+    /* Module Resolution Options */
+    "esModuleInterop": true,
+    "preserveSymlinks": false,
+
+    /* Experimental Options */
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+
+    /* Advanced Options */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }

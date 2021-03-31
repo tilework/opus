@@ -8,7 +8,6 @@ export const checkForErrors = (res: MagentoGraphQlResponse): unknown | never => 
     const { errors, data } = res;
 
     if (errors) {
-        // not throwing an error (we need Object as payload)
         throw errors;
     }
 

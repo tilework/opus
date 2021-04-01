@@ -101,7 +101,7 @@ export class Field<
     }
 
     // TODO support strings mixed with fields
-    addFieldList<S extends string>(fieldList: S[]): Field<
+    addFieldList<S extends string>(fieldList: readonly S[]): Field<
         N,
         RT & { [K in S]: FetchedFieldItemType }
     > {

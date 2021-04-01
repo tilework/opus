@@ -13,6 +13,7 @@ This library is TINY and still provides all of the main functionality for GraphQ
 #### 👩‍⚖️ Definitely typed
 
 Generate GraphQL requests with Builder pattern and receive properly structurally typed responses upon fetching!
+![Hnet com-image](https://user-images.githubusercontent.com/46347627/113285078-304d1b80-92f3-11eb-91f4-c7a491a39996.gif)
 
 ## What
 

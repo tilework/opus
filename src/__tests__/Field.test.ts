@@ -1,4 +1,4 @@
-import Client, { Field } from '..';
+import { Field } from '..';
 import CombinedField from '../util/Query/CombinedField';
 import { InlineFragment } from '../util/Query/InlineFragment';
 

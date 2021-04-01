@@ -2,7 +2,7 @@
     "name": "@plugjs/spalva",
     "version": "0.0.1",
     "license": "MIT",
-    "main": "dist/index.js",
+    "main": "dist/client.js",
     "scripts": {
         "compile": "tsc --build tsconfig.json",
         "test": "jest"

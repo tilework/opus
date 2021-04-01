@@ -4,7 +4,7 @@ import type Field from './Field';
 export class CombinedField<IRT> {
     fields: Field<string, unknown>[] = [];
 
-    addField<N extends string, RT>(field: Field<N, RT>): CombinedField<IRT & {[k in N]: RT}> {
+    addField<N extends string, RT>(field: Field<N, RT>): CombinedField<IRT & {[k in N]: RT[]}> {
         this.fields.push(field);
 
         return this;

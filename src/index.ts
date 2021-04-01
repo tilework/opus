@@ -4,6 +4,7 @@ import {
     GraphQlRequestType,
     prepareRequest
 } from './util/Request/prepareDocument';
+import defaultMiddleware from './middleware/Common';
 import { executePost } from './util/Request';
 
 export type ResponseParser = (response: any) => unknown;
@@ -16,7 +17,7 @@ export type RequestOptions = {
 
 export const defaultOptions: RequestOptions = {
     endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql',
-    middleware: (response: any) => response
+    middleware: defaultMiddleware
 };
 
 /** @namespace Graphql/Index/Client */

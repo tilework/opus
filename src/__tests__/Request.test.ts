@@ -1,5 +1,5 @@
 import client, { Field } from '..';
-import middleware from '../middleware/Magento';
+import middleware from '../middleware/Common';
 import CombinedField from '../util/Query/CombinedField';
 
 client.setEndpoint('https://api.spacex.land/graphql/');

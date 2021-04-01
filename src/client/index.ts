@@ -7,12 +7,17 @@ import {
 import defaultMiddleware from '../middleware/Common';
 import { executePost } from '../util/Request';
 
-export type ResponseParser = (response: any) => unknown;
+export interface GraphQlResponse {
+    errors: string | Error | Error[],
+    data: unknown
+}
+
+export type Middleware = (response: GraphQlResponse) => unknown;
 
 export type RequestOptions = {
     endpoint: string,
     headers?: any,
-    middleware?: ResponseParser
+    middleware?: Middleware
 };
 
 export const defaultOptions: RequestOptions = {
@@ -53,7 +58,7 @@ export class Client {
         this.options.endpoint = endpoint;
     };
 
-    setMiddleware = (parser: ResponseParser): void => {
+    setMiddleware = (parser: Middleware): void => {
         this.options.middleware = parser;
     };
 

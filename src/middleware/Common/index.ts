@@ -1,10 +1,7 @@
-export interface MagentoGraphQlResponse {
-    errors: string | Error | Error[],
-    data: unknown[]
-}
+import { GraphQlResponse } from '../../client';
 
 /** @namespace Graphql/Middleware/Magento/Index/checkForErrors */
-export const checkForErrors = (res: MagentoGraphQlResponse): unknown | never => {
+export const checkForErrors = (res: GraphQlResponse): unknown | never => {
     const { errors, data } = res;
 
     if (errors) {
@@ -36,7 +33,7 @@ export const parseError = (error: string | IError | IError[]): string => {
 };
 
 /** @namespace Graphql/Middleware/Magento/Index/parseResponse */
-export const parseResponse = async (response: MagentoGraphQlResponse): Promise<unknown> => {
+export const parseResponse = (response: GraphQlResponse): unknown => {
     try {
         return checkForErrors(response);
     } catch (e) {

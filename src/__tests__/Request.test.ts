@@ -49,7 +49,7 @@ describe('data is fetched correctly', () => {
         expect(result.insert_users.affected_rows).toBeGreaterThan(0);
         expect(result.insert_users.returning[0].name).toBe('Yegor');
         expect(result.insert_users.returning[0].rocket).toBe('SomeRocket');
-    })
+    }, 15000)
 
     it('is able to fetch combined queries', async () => {
         const result = await client.postQuery(combinedQuery);

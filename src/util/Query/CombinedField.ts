@@ -1,5 +1,7 @@
 import type Field from './Field';
 
+// TODO support combined [query, mutation]
+
 /** @namespace Graphql/Util/Query/CombinedField/CombinedField */
 export class CombinedField<IRT> {
     fields: Field<string, unknown>[] = [];

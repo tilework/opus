@@ -15,7 +15,7 @@ export type RequestOptions = {
 };
 
 export const defaultOptions: RequestOptions = {
-    endpoint: process.env.REACT_APP_GRAPHQL_ENDPOINT || '/graphql',
+    endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql',
     middleware: (response: any) => response
 };
 
@@ -30,6 +30,7 @@ export class Client {
     ) => {
         const fieldArray = rawField instanceof CombinedField ? rawField.fields : [rawField];
 
+        // TODO deep merge
         const response = await executePost(
             prepareRequest(fieldArray, requestType),
             {

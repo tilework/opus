@@ -7,12 +7,15 @@ client.setMiddleware(middleware);
 
 const dragonsQuery = new Field('dragons')
     .addArgument('limit', 'Int', 5)
-    .addFieldList(['name', 'active'])
+    .addFieldList(['name', 'active']);
+
 const capsulesQuery = new Field('capsules')
     .addArgument('limit', 'Int', 5)
     .addFieldList(['status', 'id']);
 
-const combinedQuery = new CombinedField().addField(dragonsQuery).addField(capsulesQuery);
+const combinedQuery = new CombinedField()
+    .addField(dragonsQuery)
+    .addField(capsulesQuery);
 
 const insertUserMutation = new Field('insert_users')
     .addArgument('objects', '[users_insert_input!]!', {

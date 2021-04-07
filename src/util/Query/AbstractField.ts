@@ -52,7 +52,7 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
             return this;
         }
 
-        this.args.push({ name, type, value});
+        this.args.push({ name, type, value });
 
         return this;
     }
@@ -64,21 +64,19 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
 
     // STRING
     addField<
-        NewField extends string
+        NewFieldName extends string
     >(
-        field: NewField
+        field: NewFieldName
     ): HigherKindType<
         this['tag'], 
         Name, 
-        FieldReturnType & { [K in NewField]: FetchedFieldItemType }
+        FieldReturnType & { 
+            [k in NewFieldName]: FetchedFieldItemType 
+        }
     > 
 
     // INLINE FRAGMENT
-    addField<
-        NewFieldName extends string, 
-        NewFieldReturnType, 
-        NewField extends InlineFragment<NewFieldName, NewFieldReturnType>
-    >( 
+    addField<NewField extends InlineFragment<any, any>>( 
         field: NewField
     ): HigherKindType<
         this['tag'], 
@@ -87,16 +85,14 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
     >;
 
     // FIELD
-    addField<
-        S extends string, 
-        IRT, 
-        F extends Field<S, IRT>
-    >(
+    addField<F extends Field<any, any>>(
         field: F
     ): HigherKindType<
         this['tag'], 
         Name, 
-        FieldReturnType & { [K in F['name']]: F['resultTypeHolder'] }
+        FieldReturnType & { 
+            [k in F['name']]: F['resultTypeHolder'] 
+        }
     >;
     // !
 

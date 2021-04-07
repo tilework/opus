@@ -1,4 +1,5 @@
-import { Argument, Field } from '../Query/Field';
+import Field from '../Query/Field';
+import { Argument } from '../Query/AbstractField';
 
 export enum GraphQlRequestType {
     Mutation = 'mutation',

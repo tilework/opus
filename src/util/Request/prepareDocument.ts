@@ -1,5 +1,4 @@
-import Field from '../Query/Field';
-import { Argument } from '../Query/AbstractField';
+import AbstractField, { Argument } from '../Query/AbstractField';
 
 export enum GraphQlRequestType {
     Mutation = 'mutation',
@@ -15,11 +14,10 @@ export interface GraphQLDocument {
 }
 
 /** @namespace Graphql/Util/Query/PrepareDocument/prepareFieldString */
-export const prepareFieldString = <
-    N extends string,
-    RT,
-    F extends Field<N, RT>
->(rootField: F, accArgs: AccArgs = {}): string => {
+export const prepareFieldString = (
+    rootField: AbstractField<any, any, any>, 
+    accArgs: AccArgs = {}
+): string => {
     const {
         alias, name, args, children
     } = rootField;
@@ -53,11 +51,10 @@ export const prepareFieldString = <
 };
 
 /** @namespace Graphql/Util/Query/PrepareDocument/prepareRequest */
-export const prepareRequest = <
-    N extends string,
-    RT,
-    F extends Field<N, RT>
->(fields: F[], type: GraphQlRequestType): GraphQLDocument => {
+export const prepareRequest = (
+    fields: AbstractField<any, any, any>[], 
+    type: GraphQlRequestType
+): GraphQLDocument => {
     const fieldsArray = Array.isArray(fields) ? fields : [fields];
 
     const variables: {[name: string]: string} = {};

@@ -2,6 +2,22 @@ import Field from "../util/Query/Field";
 import InlineFragment from "../util/Query/InlineFragment";
 
 describe('field is built', () => {
+    it('adds array fields', () => {
+        const field = new Field('person')
+            .addField('friends', true);
+
+        field.resultTypeHolder.friends;
+    })
+
+    it('adds non-array fields', () => {
+        const field = new Field('person')
+            .addField('a', false)
+            .addField('b');
+
+        field.resultTypeHolder.a;
+        field.resultTypeHolder.b;
+    })
+
     it('adds child fields one by one', () => {
         const field = new Field('some')
             .addField('one')
@@ -35,13 +51,6 @@ describe('field is built', () => {
         expect(field.children[0].children[0].name).toBe('age');
         expect(field).toBeInstanceOf(Field);
     });
-
-    // it('adds array fields', () => {
-    //     const field = new Field('person')
-    //         .addField('friends');
-
-    //     field.resultTypeHolder.friends;
-    // })
 
     it('adds inline fragments', () => {
         const field = new Field('some')

@@ -1,6 +1,4 @@
-import { InlineFragment } from './InlineFragment';
 import type { HigherKindType, FieldDescendantStore } from '../types';
-import Field from './Field';
 
 export interface Argument {
     name: string;
@@ -12,24 +10,35 @@ export interface Argument {
 export type FetchedFieldItemType = string | number | null;
 
 /** @namespace Graphql/Util/Query/Field/Field */
-export abstract class AbstractField<Name extends string, FieldReturnType> {
+export abstract class AbstractField<
+    Name extends string,
+    FieldReturnType,
+    ArrayExpected extends boolean
+> {
     /**
      * Type of name is changeable by setting an alias onto it.
      * The actual value of name is immutable.
      */
     readonly name: Name;
-    readonly tag: keyof FieldDescendantStore<any, any> = 'AbstractField';
 
+    readonly isArray?: ArrayExpected;
+    
+    readonly tag: keyof FieldDescendantStore<any, any, any> = 'AbstractField';
+    
     alias = '';
 
-    children: Field<string, unknown>[] = [];
+    children: Array<InlineFragment<any, any> | Field<any, any, any>> = [];
 
     args: Argument[] = [];
 
     resultTypeHolder: FieldReturnType = {} as FieldReturnType;
 
-    constructor(name: Name) {
+    constructor(
+        name: Name, 
+        isArray?: ArrayExpected
+    ) {
         this.name = name;
+        this.isArray = isArray;
     }
 
     /**
@@ -38,9 +47,10 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
      * This illusion is implemented so that you have proper typings for the queries' return values
      */
     setAlias<Alias extends string>(alias: Alias): HigherKindType<
-        this['tag'], 
+        this['tag'],
         Alias, 
-        FieldReturnType
+        FieldReturnType,
+        ArrayExpected
     > {
         this.alias = `${alias}:`;
 
@@ -64,15 +74,20 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
 
     // STRING
     addField<
-        NewFieldName extends string
+        NewFieldName extends string,
+        IsArray extends boolean
     >(
-        field: NewFieldName
+        field: NewFieldName,
+        isArray?: IsArray
     ): HigherKindType<
         this['tag'], 
-        Name, 
-        FieldReturnType & { 
-            [k in NewFieldName]: FetchedFieldItemType 
-        }
+        Name,
+        FieldReturnType & {
+            [k in NewFieldName]: IsArray extends true
+                ? FetchedFieldItemType[]
+                : FetchedFieldItemType
+        },
+        ArrayExpected
     > 
 
     // INLINE FRAGMENT
@@ -85,21 +100,28 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
     >;
 
     // FIELD
-    addField<F extends Field<any, any>>(
-        field: F
+    addField<
+        F extends Field<any, any, any>,
+        IsArray extends boolean
+    >(
+        field: F,
+        isArray?: IsArray
     ): HigherKindType<
         this['tag'], 
         Name, 
         FieldReturnType & { 
-            [k in F['name']]: F['resultTypeHolder'] 
-        }
+            [k in F['name']]: IsArray extends true 
+                ? F['resultTypeHolder'][] 
+                : F['resultTypeHolder'] 
+        },
+        ArrayExpected
     >;
     // !
 
     addField(field: unknown): unknown {
         if (typeof field === 'string') {
             this.children.push(new Field(field));
-        } else if (field instanceof Field) {
+        } else if (field instanceof Field || field instanceof InlineFragment) {
             this.children.push(field);
         } else {
             throw new Error('Unknown field type!');
@@ -115,7 +137,8 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
     ): HigherKindType<
         this['tag'],
         Name,
-        FieldReturnType & { [K in NewField]: FetchedFieldItemType }
+        FieldReturnType & { [K in NewField]: FetchedFieldItemType },
+        ArrayExpected
     > {
         fieldList.forEach(this.addField.bind(this));
 
@@ -124,3 +147,7 @@ export abstract class AbstractField<Name extends string, FieldReturnType> {
 }
 
 export default AbstractField;
+
+// Importing assets here prevents circular dependency issues
+import Field from './Field';
+import { InlineFragment } from './InlineFragment';

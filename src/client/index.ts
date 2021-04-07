@@ -1,11 +1,11 @@
-import CombinedField from '../util/Query/CombinedField';
-import type { Field } from '../util/Query/Field';
+import Batch from '../util/Query/Batch';
 import {
-    GraphQlRequestType,
     prepareRequest
 } from '../util/Request/prepareDocument';
-import defaultMiddleware from '../middleware/Common';
+import defaultMiddleware from './middleware/Common';
 import { executePost } from '../util/Request';
+import Mutation from '../util/Query/Mutation';
+import Query from '../util/Query/Query';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],
@@ -29,31 +29,6 @@ export const defaultOptions: RequestOptions = {
 export class Client {
     protected options: RequestOptions = defaultOptions;
 
-    protected post = async <N extends string, RT>(
-        rawField: Field<N, RT> | CombinedField<RT>,
-        requestType: GraphQlRequestType,
-        overrideOptions?: Partial<RequestOptions>
-    ) => {
-        const fieldArray = rawField instanceof CombinedField ? rawField.fields : [rawField];
-
-        // TODO deep merge
-        const response = await executePost(
-            prepareRequest(fieldArray, requestType),
-            {
-                ...this.options,
-                ...(overrideOptions || {})
-            }
-        );
-
-        const parsedResponse = this.options.middleware!(await response.json());
-
-        if (rawField instanceof CombinedField) {
-            return parsedResponse as Promise<RT>;
-        }
-
-        return parsedResponse as Promise<{[k in N]: RT}>;
-    };
-
     setEndpoint = (endpoint: string): void => {
         this.options.endpoint = endpoint;
     };
@@ -68,34 +43,38 @@ export class Client {
 
     getOptions = (): RequestOptions => this.options;
 
-    // ** Query **
-    postQuery<N extends string, RT>(
-        rawQueries: Field<N, RT>,
+    async post<N extends string, RT, A extends boolean>(
+        rawField: Query<N, RT, A> | Mutation<N, RT, A>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<{ [k in N]: RT[]; }>;
+    ): Promise<{[k in N]: A extends true ? RT[] : RT}>;
 
-    postQuery<RT>(
-        rawQueries: CombinedField<RT>,
-        overrideOptions?: Partial<RequestOptions>
-    ): Promise<RT>;
-
-    postQuery(rawQueries: any, overrideOptions: any) {
-        return this.post(rawQueries, GraphQlRequestType.Query, overrideOptions);
-    }
-
-    // ** Mutation **
-    postMutation<N extends string, RT>(
-        rawMutations: Field<N, RT>,
-        overrideOptions?: Partial<RequestOptions>
-    ): Promise<{ [k in N]: RT; }>;
-
-    postMutation<RT>(
-        rawMutations: CombinedField<RT>,
+    async post<N extends string, RT>(
+        rawField: Batch<RT>,
         overrideOptions?: Partial<RequestOptions>
     ): Promise<RT>;
 
-    postMutation<N extends string, RT>(rawMutations: any, overrideOptions: any) {
-        return this.post(rawMutations, GraphQlRequestType.Mutation, overrideOptions)
+    async post(
+        rawField: any,
+        overrideOptions?: Partial<RequestOptions>
+    ) {
+        const fieldArray = rawField instanceof Batch ? rawField.getFields() : [rawField];
+
+        if (!fieldArray.length) {
+            throw new Error('Attempting to post empty batch!');
+        }
+
+        const response = await executePost(
+            prepareRequest(fieldArray, rawField.type!),
+            // TODO deep merge
+            {
+                ...this.options,
+                ...(overrideOptions || {})
+            }
+        );
+
+        const parsedResponse = this.options.middleware!(await response.json());
+
+        return parsedResponse;
     };
 }
 

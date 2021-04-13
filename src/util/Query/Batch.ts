@@ -4,16 +4,16 @@ import { GraphQlRequestType } from '../Request/prepareDocument';
 import AbstractField from './AbstractField';
 
 /** @namespace Graphql/Util/Query/CombinedField/CombinedField */
-export class Batch<IRT> {
+export class Batch<ReturnType> {
     type?: GraphQlRequestType;
 
-    resultTypeHolder?: IRT;
+    resultTypeHolder?: ReturnType;
     
     protected fields: AbstractField<any, any, any>[] = [];
 
-    addField<N extends string, A extends boolean, RT>(
-        field: Query<N, RT, A> | Mutation<N, RT, A>
-    ): Batch<IRT & {[k in N]: A extends true ? RT[] : RT}> {
+    add<Name extends string, FieldReturnType, IsArray extends boolean>(
+        field: Query<Name, FieldReturnType, IsArray> | Mutation<Name, FieldReturnType, IsArray>
+    ): Batch<ReturnType & {[k in Name]: IsArray extends true ? FieldReturnType[] : FieldReturnType}> {
         // Handle first field
         if (!this.type) {
             this.type = field.type;

@@ -21,8 +21,8 @@ const capsulesQuery = new Query('capsules', true)
     .addFieldList(['status', 'id']);
 
 const combinedQuery = new Batch()
-    .addField(dragonsQuery)
-    .addField(capsulesQuery);
+    .add(dragonsQuery)
+    .add(capsulesQuery);
 
 const insertUserMutation = new Mutation('insert_users')
     .addArgument('objects', '[users_insert_input!]!', {

@@ -8,8 +8,8 @@ describe('batches are built', () => {
         const secondQuery = new Query('second').addField('two');
 
         const combinedField = new Batch()
-            .addField(firstQuery)
-            .addField(secondQuery);
+            .add(firstQuery)
+            .add(secondQuery);
     
         expect(combinedField.getFields().length).toBe(2);
     })
@@ -19,8 +19,8 @@ describe('batches are built', () => {
         const secondMutation = new Mutation('second').addField('two');
 
         const combinedField = new Batch()
-            .addField(firstMutation)
-            .addField(secondMutation);
+            .add(firstMutation)
+            .add(secondMutation);
     
         expect(combinedField.getFields().length).toBe(2);
     })
@@ -31,8 +31,8 @@ describe('batches are built', () => {
 
         expect(() => {
             const combinedField = new Batch()
-                .addField(mutation)
-                .addField(query);
+                .add(mutation)
+                .add(query);
         }).toThrow();
     })
 });

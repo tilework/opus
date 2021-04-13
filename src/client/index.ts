@@ -69,16 +69,19 @@ export class Client {
 
         if (rawField instanceof Batch) {
             for (const field of rawField.getFields()) {
-                await this.calculateFields(field, parsedResponse[field.name])
+                await this.process(field, parsedResponse[field.name], parsedResponse)
             }
         } else {
-            await this.calculateFields(rawField, parsedResponse[rawField.name]);
+            await this.process(rawField, parsedResponse[rawField.name], parsedResponse);
         }
 
         return Object.freeze(parsedResponse);
     };
 
-    async calculateFields(field: AbstractField<any, any, any>, result: any) {
+    /**
+     * Handles calculating and transforming fields on result
+     */
+    async process(field: AbstractField<any, any, any>, result: any, parentResult: any) {
         // Prevent calculating for non-object fields from the result
         if (!field.children.length) {
             return;
@@ -87,17 +90,21 @@ export class Client {
         // If array - process each separately
         if (Array.isArray(result)) {
             for (const item of result) {
-                await this.calculateFields(field, item);
+                await this.process(field, item, parentResult);
             }
         } else {
             // If has children - process children first
             for (const child of field.children) {
-                await this.calculateFields(child, result[child.name]);
+                await this.process(child, result[child.name], result);
             }
 
             // POSTVISIT - calculate the actual fields
             for (const [fieldName, calculator] of Object.entries(field.calculators)) {
                 result[fieldName] = await calculator(result);
+            }
+
+            if (field.transformer) {
+                parentResult[field.name] = field.transformer(result);
             }
         }
     }

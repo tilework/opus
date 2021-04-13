@@ -35,6 +35,8 @@ export abstract class AbstractField<
 
     calculators: Record<string, (result: FieldReturnType) => any> = {};
 
+    transformer?: (result: FieldReturnType) => any;
+
     constructor(
         name: Name, 
         isArray?: ArrayExpected
@@ -82,6 +84,17 @@ export abstract class AbstractField<
         ArrayExpected
     > {
         this.calculators[field] = calculator;
+
+        return this as any;
+    }
+
+    addTransformation<RT>(transformer: (result: FieldReturnType) => RT): HigherKindType<
+        this['tag'],
+        Name,
+        RT,
+        ArrayExpected
+    > {
+        this.transformer = transformer;
 
         return this as any;
     }

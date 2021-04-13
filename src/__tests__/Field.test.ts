@@ -64,4 +64,10 @@ describe('field is built', () => {
         expect(field.children[0].children[0].name).toBe('thing');
         expect(field).toBeInstanceOf(Field);
     });
+
+    it('adds a transformer to the field', () => {
+        const field = new Field('some')
+            .addField('thing')
+            .addTransformation((some) => 123 as const);
+    })
 });

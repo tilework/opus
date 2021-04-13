@@ -4,25 +4,23 @@ const ONE_KG_IN_LBS = 2.20462;
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 
-const query = new Query('dragons', true)
-    .addField('active')
-    .addField(new Field('launch_payload_mass')
-        .addField('kg')
-        .addField('lb')
-        .addCalculatedField('lb_calculated', (result) => result.kg * ONE_KG_IN_LBS)
-    )
-    .addField(new Field('return_payload_mass')
-        .addField('kg')
-    )
-    .addCalculatedField('payload_delta', (result) => {
-        return result.launch_payload_mass.kg - result.return_payload_mass.kg;
-    });
-
-const pending = client.post(query);
-
 describe('calculated fields are working OK', () => {
     it('calculates fields', async () => {
-        const result = await pending;
+        const query = new Query('dragons', true)
+            .addField('active')
+            .addField(new Field('launch_payload_mass')
+                .addField('kg')
+                .addField('lb')
+                .addCalculatedField('lb_calculated', (result) => result.kg * ONE_KG_IN_LBS)
+            )
+            .addField(new Field('return_payload_mass')
+                .addField('kg')
+            )
+            .addCalculatedField('payload_delta', (result) => {
+                return result.launch_payload_mass.kg - result.return_payload_mass.kg;
+            });
+
+        const result = await client.post(query);
 
         for (const dragon of result.dragons) {
             expect(dragon.payload_delta).toBeDefined();
@@ -31,6 +29,26 @@ describe('calculated fields are working OK', () => {
 
             expect(dragon.launch_payload_mass.lb_calculated).toBeDefined()
             expect(dragon.launch_payload_mass.lb_calculated).toBeCloseTo(dragon.launch_payload_mass.lb, 0);
+        }
+    })
+
+    it('transforms fields', async () => {
+        const query = new Query('dragons', true)
+            .addField('active')
+            .addField(new Field('launch_payload_mass')
+                .addField('kg')
+                .addTransformation((launchPayload) => launchPayload.kg)
+            )
+            .addField(new Field('return_payload_mass')
+                .addField('kg')
+                .addTransformation((returnPayload) => returnPayload.kg)
+            );
+
+        const result = await client.post(query);
+
+        for (const dragon of result.dragons) {
+            expect(typeof dragon.launch_payload_mass).toBe('number');
+            expect(typeof dragon.return_payload_mass).toBe('number');
         }
     })
 })

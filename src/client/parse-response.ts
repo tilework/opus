@@ -33,7 +33,7 @@ export const parseError = (error: string | IError | IError[]): string => {
 };
 
 /** @namespace Graphql/Middleware/Magento/Index/parseResponse */
-export const parseResponse = (response: GraphQlResponse): unknown => {
+export const parseResponse = (response: GraphQlResponse): any => {
     try {
         return checkForErrors(response);
     } catch (e) {

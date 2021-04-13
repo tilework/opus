@@ -4,6 +4,7 @@ import parseResponse from './parse-response';
 import { executePost } from './post';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
+import AbstractField from '../builder/AbstractField';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],
@@ -66,8 +67,42 @@ export class Client {
 
         const parsedResponse = parseResponse(await response.json());
 
+        if (rawField instanceof Batch) {
+            rawField.getFields().forEach((field) => {
+                this.calculateFields(field, parsedResponse[field.name])
+            });
+        } else {
+            this.calculateFields(rawField, parsedResponse[rawField.name]);
+        }
+
         return parsedResponse;
     };
+
+    async calculateFields(field: AbstractField<any, any, any>, result: any) {
+        // Prevent calculating for non-object fields from the result
+        if (!field.children.length) {
+            return;
+        }
+
+        // If array - process each separately
+        if (Array.isArray(result)) {
+            for (const item of result) {
+                this.calculateFields(field, item);
+            }
+        } else {
+            // If has children - process children first
+            for (const child of field.children) {
+                this.calculateFields(child, result[child.name]);
+            }
+
+            // POSTVISIT - calculate the actual fields
+            Object
+                .entries(field.calculators)
+                .forEach(([fieldName, calculator]) => {
+                    result[fieldName] = calculator(result);
+                });
+        }
+    }
 }
 
 export default Client;

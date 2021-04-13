@@ -7,7 +7,7 @@ export interface Argument {
 }
 
 // Workaround. Should be improved when partial type inference is supported by TS.
-export type FetchedFieldItemType = string | number | null;
+export type FetchedFieldItemType = any; //string | number | null;
 
 /** @namespace Graphql/Util/Query/Field/Field */
 export abstract class AbstractField<
@@ -32,6 +32,8 @@ export abstract class AbstractField<
     args: Argument[] = [];
 
     resultTypeHolder: FieldReturnType = {} as FieldReturnType;
+
+    calculators: Record<string, (result: FieldReturnType) => any> = {};
 
     constructor(
         name: Name, 
@@ -65,6 +67,23 @@ export abstract class AbstractField<
         this.args.push({ name, type, value });
 
         return this;
+    }
+
+    addCalculatedField<
+        NewFieldName extends string,
+        NewFieldType extends any
+    >(
+        field: NewFieldName, 
+        calculator: (result: FieldReturnType) => NewFieldType
+    ): HigherKindType<
+        this['tag'],
+        Name,
+        FieldReturnType & { [k in NewFieldName]: NewFieldType },
+        ArrayExpected
+    > {
+        this.calculators[field] = calculator;
+
+        return this as any;
     }
 
     // ! DO NOT REORDER THESE OVERLOADS

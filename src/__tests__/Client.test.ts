@@ -76,4 +76,23 @@ describe('data is fetched correctly', () => {
             expect(dragon).toHaveProperty('active');
         }
     })
+
+    it('ensures data immutability', async () => {
+        const result = await client.post(dragonsQuery);
+
+        expect(() => {
+            // @ts-expect-error
+            result.dragons = 0;
+        }).toThrow();
+
+        expect(() => {
+            // @ts-expect-error
+            result.dragons[0] = {};
+        }).toThrow();
+
+        expect(() => {
+            // @ts-expect-error
+            result.dragons[0].active = !result.dragons[0].active;
+        }).toThrow();
+    })
 })

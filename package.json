@@ -1,9 +1,11 @@
 {
     "name": "@tilework/tesserae",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "license": "MIT",
     "main": "dist/index.js",
-    "files": ["dist/**/*"],
+    "files": [
+        "dist/**/*"
+    ],
     "scripts": {
         "compile": "tsc --build tsconfig.json",
         "prepublish": "npm run test && npm run compile",

@@ -1,4 +1,4 @@
-import { GraphQlRequestType } from "../../util/Request/prepareDocument";
+import { GraphQlRequestType } from "../../client/prepareDocument";
 
 export interface IRequestable {
     readonly type: GraphQlRequestType

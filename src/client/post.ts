@@ -1,4 +1,4 @@
-import { RequestOptions } from '../../client';
+import { RequestOptions } from '.';
 import { GraphQLDocument } from './prepareDocument';
 
 if (typeof fetch === 'undefined') {

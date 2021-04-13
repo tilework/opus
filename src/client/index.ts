@@ -1,9 +1,9 @@
 import Batch from '../builder/Batch';
 import {
     prepareRequest
-} from '../util/Request/prepareDocument';
+} from './prepareDocument';
 import defaultMiddleware from './middleware/Common';
-import { executePost } from '../util/Request';
+import { executePost } from './post';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
 

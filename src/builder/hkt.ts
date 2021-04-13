@@ -1,8 +1,8 @@
-import type { Field } from '../builder/Field';
-import type Query from '../builder/Query'
-import type Mutation from '../builder/Mutation'
-import type InlineFragment from '../builder/InlineFragment';
-import type AbstractField from '../builder/AbstractField';
+import type { Field } from './Field';
+import type Query from './Query'
+import type Mutation from './Mutation'
+import type InlineFragment from './InlineFragment';
+import type AbstractField from './AbstractField';
 
 export interface FieldDescendantStore<
     N extends string, 

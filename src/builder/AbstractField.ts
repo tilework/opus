@@ -1,4 +1,4 @@
-import type { HigherKindType, FieldDescendantStore } from '../types';
+import type { HigherKindType, FieldDescendantStore } from '../util/hkt';
 
 export interface Argument {
     name: string;

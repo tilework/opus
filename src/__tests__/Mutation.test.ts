@@ -1,4 +1,4 @@
-import Mutation from "../util/Query/Mutation";
+import Mutation from "../builder/Mutation";
 
 describe('mutations are built', () => {
     it('builds a mutation', () => {

@@ -1,5 +1,5 @@
-import Field from "../util/Query/Field";
-import InlineFragment from "../util/Query/InlineFragment";
+import Field from "../builder/Field";
+import InlineFragment from "../builder/InlineFragment";
 
 describe('field is built', () => {
     it('adds array fields', () => {

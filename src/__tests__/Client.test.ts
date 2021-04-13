@@ -1,8 +1,8 @@
 import client, { Field } from '..';
-import Mutation from '../util/Query/Mutation';
-import Query from '../util/Query/Query';
+import Mutation from '../builder/Mutation';
+import Query from '../builder/Query';
 import middleware from '../client/middleware/Common';
-import Batch from '../util/Query/Batch';
+import Batch from '../builder/Batch';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 client.setMiddleware(middleware);

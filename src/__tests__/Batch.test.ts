@@ -1,6 +1,6 @@
-import Mutation from "../util/Query/Mutation";
-import Query from "../util/Query/Query";
-import Batch from "../util/Query/Batch";
+import Mutation from "../builder/Mutation";
+import Query from "../builder/Query";
+import Batch from "../builder/Batch";
 
 describe('batches are built', () => {
     it('builds batched queries', () => {

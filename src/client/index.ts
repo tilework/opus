@@ -1,11 +1,11 @@
-import Batch from '../util/Query/Batch';
+import Batch from '../builder/Batch';
 import {
     prepareRequest
 } from '../util/Request/prepareDocument';
 import defaultMiddleware from './middleware/Common';
 import { executePost } from '../util/Request';
-import Mutation from '../util/Query/Mutation';
-import Query from '../util/Query/Query';
+import Mutation from '../builder/Mutation';
+import Query from '../builder/Query';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],

@@ -1,4 +1,4 @@
-import Query from "../util/Query/Query";
+import Query from "../builder/Query";
 
 describe('queries are built', () => {
     it('builds a query', () => {

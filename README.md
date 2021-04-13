@@ -26,6 +26,7 @@ This library is TINY and still provides all of the main functionality for GraphQ
 </h4>
 
 Generate GraphQL requests with Builder pattern and receive properly structurally typed responses upon fetching!
+
 ![Hnet com-image](https://user-images.githubusercontent.com/46347627/113285078-304d1b80-92f3-11eb-91f4-c7a491a39996.gif)
 
 ## What
@@ -41,10 +42,10 @@ The only thing not yet supported are non-inline Fragments. Although, apart from 
 ```js
 const dragonFields = ['name', 'neck_length', 'age'] as const;
 
-const dragonsQuery = new Field('dragons')
+const dragonsQuery = new Field('dragons', true)
     .addArgument('limit', 'Int', 5)
     .addFieldList(dragonFields)
-    .addField(new Field('children')
+    .addField(new Field('children', true)
         .addFieldList(dragonFields)
     )
     .addField(new InlineFragment('Fire')

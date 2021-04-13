@@ -51,4 +51,22 @@ describe('calculated fields are working OK', () => {
             expect(typeof dragon.return_payload_mass).toBe('number');
         }
     })
+
+    it('does not allow adding props through processors', async () => {
+        const query = new Query('dragons', true)
+            .addField('active')
+            .addField(new Field('launch_payload_mass')
+                .addField('kg')
+                .addTransformation((launchPayload) => {
+                    // @ts-expect-error
+                    launchPayload.lbs = launchPayload.kg * 2.20462;
+
+                    return launchPayload;
+                })
+            );
+
+        await expect(async () => {
+            const result = await client.post(query);
+        }).rejects.toThrowError(TypeError);
+    })
 })

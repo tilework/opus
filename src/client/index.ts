@@ -5,6 +5,8 @@ import { executePost } from './post';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
 import AbstractField from '../builder/AbstractField';
+import deep from './deep-apply';
+import type { DeepReadonly } from './deep-readonly';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],
@@ -39,12 +41,12 @@ export class Client {
     async post<N extends string, RT, A extends boolean>(
         rawField: Query<N, RT, A> | Mutation<N, RT, A>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<Readonly<{[k in N]: A extends true ? RT[] : RT}>>;
+    ): Promise<DeepReadonly<{[k in N]: A extends true ? RT[] : RT}>>;
 
     async post<N extends string, RT>(
         rawField: Batch<RT>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<Readonly<RT>>;
+    ): Promise<DeepReadonly<RT>>;
 
     async post(
         rawField: any,
@@ -75,7 +77,9 @@ export class Client {
             await this.process(rawField, parsedResponse[rawField.name], parsedResponse);
         }
 
-        return Object.freeze(parsedResponse);
+        deep(Object.freeze, parsedResponse);
+        
+        return parsedResponse;
     };
 
     /**
@@ -103,9 +107,14 @@ export class Client {
                 result[fieldName] = await calculator(result);
             }
 
+            // Prevent adding new properties from now on
+            deep(Object.seal, result);
+
             if (field.transformer) {
-                parentResult[field.name] = field.transformer(result);
+                parentResult[field.name] = await field.transformer(result);
             }
+
+            // TODO in dev mode we can compare own props to prevent extending in improper ways
         }
     }
 }

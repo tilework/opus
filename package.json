@@ -1,5 +1,5 @@
 {
-    "name": "@plugjs/spalva",
+    "name": "@tilework/spalva",
     "version": "0.0.1",
     "license": "MIT",
     "main": "dist/client.js",

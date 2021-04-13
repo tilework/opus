@@ -5,8 +5,8 @@ import { executePost } from './post';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
 import AbstractField from '../builder/AbstractField';
-import deep from './deep-apply';
-import type { DeepReadonly } from './deep-readonly';
+import deep from '../util/deep-apply';
+import type { DeepReadonly } from '../util/deep-readonly';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],

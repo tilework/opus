@@ -1,6 +1,6 @@
 import { Client } from "./client";
 
-export { default as Field } from './util/Query/Field';
-export { default as InlineFragment } from './util/Query/InlineFragment';
+export { default as Field } from './builder/Field';
+export { default as InlineFragment } from './builder/InlineFragment';
 
 export default new Client();

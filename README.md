@@ -1,6 +1,6 @@
 <h1 float="left">
-    <img src="https://e.unicode-table.com/orig/40/2824a7079418328ff8a74ab2d92441.png" height="32">
-    Spalva
+    <img src="https://e.unicode-table.com/orig/17/ff0735e32bcb79881476a51225a480.png" height="32">
+    Tesserae
 </h1>
 
 ## Why

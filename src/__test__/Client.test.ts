@@ -10,6 +10,11 @@ client.setMiddleware(middleware);
 const dragonsQuery = new Query('dragons', true)
     .addArgument('limit', 'Int', 5)
     .addFieldList(['name', 'active'])
+    .addField(new Field('thrusters', true)
+        .addField(new Field('thrust')
+            .addField('kN')
+        )
+    )
 
 const capsulesQuery = new Query('capsules', true)
     .addArgument('limit', 'Int', 5)
@@ -25,24 +30,24 @@ const insertUserMutation = new Mutation('insert_users')
         rocket: "SomeRocket"
     })
     .addField('affected_rows')
-    .addField(new Field('returning')
+    .addField(new Field('returning', true)
         .addFieldList([
             'id', 
             'name', 
             'rocket'
-        ]),
-        true
+        ])
     );
 
 describe('data is fetched correctly', () => {
     it('is able to fetch queries', async () => {
-        dragonsQuery.resultTypeHolder
         const result = await client.post(dragonsQuery);
         expect(result).toBeDefined();
 
         for (const dragon of result.dragons) {
             expect(dragon).toHaveProperty('name');
             expect(dragon).toHaveProperty('active');
+            expect(dragon.thrusters).toBeInstanceOf(Array);
+            expect(dragon.thrusters[0].thrust).toBeDefined();
         }
     });
 
@@ -53,6 +58,8 @@ describe('data is fetched correctly', () => {
         result.insert_users
 
         expect(result.insert_users.affected_rows).toBeGreaterThan(0);
+
+        expect(result.insert_users.returning).toBeInstanceOf(Array);
         expect(result.insert_users.returning[0].name).toBe('Yegor');
         expect(result.insert_users.returning[0].rocket).toBe('SomeRocket');
     }, 15000)

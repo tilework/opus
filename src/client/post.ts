@@ -1,5 +1,5 @@
 import { RequestOptions } from '.';
-import { GraphQLDocument } from './prepareDocument';
+import { GraphQLDocument } from './prepare-document';
 
 if (typeof fetch === 'undefined') {
     var fetch = require('node-fetch');

@@ -1,5 +1,5 @@
 import AbstractField from "./AbstractField";
-import { GraphQlRequestType } from "../client/prepareDocument";
+import { GraphQlRequestType } from "../client/prepare-document";
 import { IRequestable } from "./interface/IRequestable";
 
 class Query<

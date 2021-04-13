@@ -1,6 +1,6 @@
 import Mutation from './Mutation';
 import Query from './Query';
-import { GraphQlRequestType } from '../client/prepareDocument';
+import { GraphQlRequestType } from '../client/prepare-document';
 import AbstractField from './AbstractField';
 
 /** @namespace Graphql/Util/Query/CombinedField/CombinedField */

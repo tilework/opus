@@ -1,11 +1,9 @@
 import client, { Field } from '..';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
-import middleware from '../client/middleware/Common';
 import Batch from '../builder/Batch';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
-client.setMiddleware(middleware);
 
 const dragonsQuery = new Query('dragons', true)
     .addArgument('limit', 'Int', 5)
@@ -54,8 +52,6 @@ describe('data is fetched correctly', () => {
     it('is able to fetch mutations', async () => {
         const result = await client.post(insertUserMutation);
         expect(result).toBeDefined();
-
-        result.insert_users
 
         expect(result.insert_users.affected_rows).toBeGreaterThan(0);
 

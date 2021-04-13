@@ -1,8 +1,6 @@
 import Batch from '../builder/Batch';
-import {
-    prepareRequest
-} from './prepareDocument';
-import defaultMiddleware from './middleware/Common';
+import { prepareRequest } from './prepare-document';
+import parseResponse from './parse-response';
 import { executePost } from './post';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
@@ -16,13 +14,11 @@ export type Middleware = (response: GraphQlResponse) => unknown;
 
 export type RequestOptions = {
     endpoint: string,
-    headers?: any,
-    middleware?: Middleware
+    headers?: any
 };
 
 export const defaultOptions: RequestOptions = {
-    endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql',
-    middleware: defaultMiddleware
+    endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql'
 };
 
 /** @namespace Graphql/Index/Client */
@@ -31,10 +27,6 @@ export class Client {
 
     setEndpoint = (endpoint: string): void => {
         this.options.endpoint = endpoint;
-    };
-
-    setMiddleware = (parser: Middleware): void => {
-        this.options.middleware = parser;
     };
 
     setHeaders = (headers: any): void => {
@@ -72,7 +64,7 @@ export class Client {
             }
         );
 
-        const parsedResponse = this.options.middleware!(await response.json());
+        const parsedResponse = parseResponse(await response.json());
 
         return parsedResponse;
     };

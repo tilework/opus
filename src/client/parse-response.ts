@@ -1,4 +1,4 @@
-import { GraphQlResponse } from '../..';
+import { GraphQlResponse } from '.';
 
 /** @namespace Graphql/Middleware/Magento/Index/checkForErrors */
 export const checkForErrors = (res: GraphQlResponse): unknown | never => {

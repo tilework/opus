@@ -1,7 +1,10 @@
 <h1 float="left">
-    <img src="https://e.unicode-table.com/orig/40/2824a7079418328ff8a74ab2d92441.png" height="32">
-    Spalva
+    <img src="https://e.unicode-table.com/orig/f5/7c6daba899f1db0c849b20fae63a38.png" height="32">
+    Opus
 </h1>
+
+
+*Opus*, the Latin for ‘work’, is the way in which the pieces of a tilework are cut and placed.
 
 ## Why
 

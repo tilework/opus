@@ -75,7 +75,7 @@ export abstract class AbstractField<
     // STRING
     addField<
         NewFieldName extends string,
-        IsArray extends boolean
+        IsArray extends boolean = false
     >(
         field: NewFieldName,
         isArray?: IsArray
@@ -101,18 +101,16 @@ export abstract class AbstractField<
 
     // FIELD
     addField<
-        F extends Field<any, any, any>,
-        IsArray extends boolean
+        F extends Field<any, any, any>
     >(
-        field: F,
-        isArray?: IsArray
+        field: F
     ): HigherKindType<
         this['tag'], 
         Name, 
         FieldReturnType & { 
-            [k in F['name']]: IsArray extends true 
+            [k in F['name']]: F extends Field<any, any, true>
                 ? F['resultTypeHolder'][] 
-                : F['resultTypeHolder'] 
+                : F['resultTypeHolder']
         },
         ArrayExpected
     >;

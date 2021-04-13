@@ -39,12 +39,12 @@ export class Client {
     async post<N extends string, RT, A extends boolean>(
         rawField: Query<N, RT, A> | Mutation<N, RT, A>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<{[k in N]: A extends true ? RT[] : RT}>;
+    ): Promise<Readonly<{[k in N]: A extends true ? RT[] : RT}>>;
 
     async post<N extends string, RT>(
         rawField: Batch<RT>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<RT>;
+    ): Promise<Readonly<RT>>;
 
     async post(
         rawField: any,
@@ -68,14 +68,14 @@ export class Client {
         const parsedResponse = parseResponse(await response.json());
 
         if (rawField instanceof Batch) {
-            rawField.getFields().forEach((field) => {
-                this.calculateFields(field, parsedResponse[field.name])
-            });
+            for (const field of rawField.getFields()) {
+                await this.calculateFields(field, parsedResponse[field.name])
+            }
         } else {
-            this.calculateFields(rawField, parsedResponse[rawField.name]);
+            await this.calculateFields(rawField, parsedResponse[rawField.name]);
         }
 
-        return parsedResponse;
+        return Object.freeze(parsedResponse);
     };
 
     async calculateFields(field: AbstractField<any, any, any>, result: any) {
@@ -87,20 +87,18 @@ export class Client {
         // If array - process each separately
         if (Array.isArray(result)) {
             for (const item of result) {
-                this.calculateFields(field, item);
+                await this.calculateFields(field, item);
             }
         } else {
             // If has children - process children first
             for (const child of field.children) {
-                this.calculateFields(child, result[child.name]);
+                await this.calculateFields(child, result[child.name]);
             }
 
             // POSTVISIT - calculate the actual fields
-            Object
-                .entries(field.calculators)
-                .forEach(([fieldName, calculator]) => {
-                    result[fieldName] = calculator(result);
-                });
+            for (const [fieldName, calculator] of Object.entries(field.calculators)) {
+                result[fieldName] = await calculator(result);
+            }
         }
     }
 }

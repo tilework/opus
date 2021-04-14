@@ -1,4 +1,4 @@
-import type { GetType } from '../util/get-type';
+import type { DataType } from '../util/data-type';
 import Mutation from "../builder/Mutation";
 import Query from "../builder/Mutation";
 import Field from '../builder/Field';
@@ -26,7 +26,7 @@ const batch = new Batch()
 
 describe('type is properly extracted', () => {
     it('extracts type from query', () => {
-        const returned: GetType<typeof query> = {} as any;
+        const returned: DataType<typeof query> = {} as any;
 
         try {
             returned.person;
@@ -37,7 +37,7 @@ describe('type is properly extracted', () => {
     });
 
     it('extracts type from a mutation', () => {
-        const returned: GetType<typeof mutation> = {} as any;
+        const returned: DataType<typeof mutation> = {} as any;
 
         try {
             returned.someMutation;
@@ -47,7 +47,7 @@ describe('type is properly extracted', () => {
     });
 
     it('extracts type from a batch', () => {
-        const returned: GetType<typeof batch> = {} as any;
+        const returned: DataType<typeof batch> = {} as any;
 
         try {
             returned.car;

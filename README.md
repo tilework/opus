@@ -43,6 +43,8 @@ Almost every aspect of GraphQL functionality is supported: fields, nested fields
 The only thing not yet supported are non-inline Fragments. Although, apart from slightly increased request size, this will not impact your development experience in any way.
 
 ```js
+import { Query, Field, InlineFragment } from '@tilework/opus';
+
 const dragonFields = ['name', 'neck_length', 'age'] as const;
 
 const dragonsQuery = new Query('dragons', true) // `true` means 'expect array'
@@ -67,6 +69,9 @@ const dragonsQuery = new Query('dragons', true) // `true` means 'expect array'
 Sometimes it is necessary to explicitly reference the type, which the fetched data will have upon retrieval. A utility type is provided in order to make this possible!
 
 ```js
+import { Query } from '@tilework/opus';
+import type { DataType } from '@tilework/opus';
+
 const query = new Query('person', true)
     .addFieldList(['name', 'surname']);
 
@@ -85,6 +90,8 @@ An opportunity to derive additional data from the fetched information is provide
 Such fields get calculated once, when the request is post-processed upon fetching. They are calculated starting with the deepest child and going up to the root node (post-visit).
 
 ```js
+import { Query, Field } from '@tilework/opus';
+
 const query = new Query('dragons', true)
     .addField('active')
     .addField(new Field('launch_payload_mass')
@@ -111,6 +118,8 @@ Sometimes it's necessary to modify the data you have received, e.g. in order to 
 In the example below, the property `launch_payload_mass` becomes `launch_payload_mass.kg`, just to make everything a bit more convenient.
 
 ```js
+import { Query, Field } from '@tilework/opus';
+
 const query = new Query('dragons', true)
     .addField('active')
     .addField(new Field('launch_payload_mass')
@@ -135,6 +144,8 @@ typeof result.dragons[0].launch_payload_mass; // number
 The `client` provides an opportunity to fetch queries and mutations, as well as fetch combined queries and combined mutations.
 
 ```js
+import client, { Batch } from '@tilework/opus';
+
 // Single requests
 const queryResult = await client.post(someQuery);
 const mutationResult = await client.post(someMutation);

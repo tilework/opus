@@ -30,7 +30,7 @@ describe('calculated fields are working OK', () => {
             expect(dragon.launch_payload_mass.lb_calculated).toBeDefined()
             expect(dragon.launch_payload_mass.lb_calculated).toBeCloseTo(dragon.launch_payload_mass.lb, 0);
         }
-    })
+    }, 3000)
 
     it('transforms fields', async () => {
         const query = new Query('dragons', true)
@@ -50,7 +50,7 @@ describe('calculated fields are working OK', () => {
             expect(typeof dragon.launch_payload_mass).toBe('number');
             expect(typeof dragon.return_payload_mass).toBe('number');
         }
-    })
+    }, 3000)
 
     it('does not allow adding props through processors', async () => {
         const query = new Query('dragons', true)
@@ -68,5 +68,5 @@ describe('calculated fields are working OK', () => {
         await expect(async () => {
             const result = await client.post(query);
         }).rejects.toThrowError(TypeError);
-    })
+    }, 3000)
 })

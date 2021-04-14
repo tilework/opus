@@ -6,7 +6,7 @@ import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
 import AbstractField from '../builder/AbstractField';
 import deep from '../util/deep-apply';
-import type { DeepReadonly } from '../util/deep-readonly';
+import { DataType } from '../util/data-type';
 
 export interface GraphQlResponse {
     errors: string | Error | Error[],
@@ -41,12 +41,12 @@ export class Client {
     async post<N extends string, RT, A extends boolean>(
         rawField: Query<N, RT, A> | Mutation<N, RT, A>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<DeepReadonly<{[k in N]: A extends true ? RT[] : RT}>>;
+    ): Promise<DataType<typeof rawField>>;
 
     async post<N extends string, RT>(
         rawField: Batch<RT>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<DeepReadonly<RT>>;
+    ): Promise<DataType<typeof rawField>>;
 
     async post(
         rawField: any,

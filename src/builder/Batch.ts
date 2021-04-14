@@ -3,7 +3,6 @@ import Query from './Query';
 import { GraphQlRequestType } from '../client/prepare-document';
 import AbstractField from './AbstractField';
 
-/** @namespace Graphql/Util/Query/CombinedField/CombinedField */
 export class Batch<ReturnType> {
     type?: GraphQlRequestType;
 

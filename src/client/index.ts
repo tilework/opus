@@ -24,7 +24,6 @@ export const defaultOptions: RequestOptions = {
     endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql'
 };
 
-/** @namespace Graphql/Index/Client */
 export class Client {
     protected options: RequestOptions = defaultOptions;
 

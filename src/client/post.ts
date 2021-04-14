@@ -5,7 +5,6 @@ if (typeof fetch === 'undefined') {
     var fetch = require('node-fetch');
 }
 
-/** @namespace Graphql/Util/Request/Index/processHeaders */
 export const processHeaders = (headers: any, options: RequestOptions): any => {
     const { headers: additionalHeaders = {} } = options;
 
@@ -15,7 +14,6 @@ export const processHeaders = (headers: any, options: RequestOptions): any => {
     };
 };
 
-/** @namespace Graphql/Util/Request/Index/postFetch */
 export const postFetch = (
     query: string,
     variables: GraphQLDocument['variables'],
@@ -32,7 +30,6 @@ export const postFetch = (
     }
 );
 
-/** @namespace Graphql/Util/Request/Index/executePost */
 export const executePost = (
     queryObject: GraphQLDocument,
     options: RequestOptions

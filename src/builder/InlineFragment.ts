@@ -1,6 +1,5 @@
 import AbstractField from './AbstractField';
 
-/** @namespace Graphql/Util/Query/InlineFragment/InlineFragment */
 export class InlineFragment<
     N extends string, 
     RT

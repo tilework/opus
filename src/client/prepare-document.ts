@@ -13,7 +13,6 @@ export interface GraphQLDocument {
     variables: {[name: string]: string}
 }
 
-/** @namespace Graphql/Util/Query/PrepareDocument/prepareFieldString */
 export const prepareFieldString = (
     rootField: AbstractField<any, any, any>, 
     accArgs: AccArgs = {}
@@ -50,7 +49,6 @@ export const prepareFieldString = (
     return `${ alias }${ name }${ formattedArgs }${ body }`;
 };
 
-/** @namespace Graphql/Util/Query/PrepareDocument/prepareRequest */
 export const prepareRequest = (
     fields: AbstractField<any, any, any>[], 
     type: GraphQlRequestType

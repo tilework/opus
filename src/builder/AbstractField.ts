@@ -9,7 +9,6 @@ export interface Argument {
 // Workaround. Should be improved when partial type inference is supported by TS.
 export type FetchedFieldItemType = any; //string | number | null;
 
-/** @namespace Graphql/Util/Query/Field/Field */
 export abstract class AbstractField<
     Name extends string,
     FieldReturnType,

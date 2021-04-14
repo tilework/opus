@@ -1,7 +1,7 @@
 import client, { Field } from '..';
 import Mutation from '../builder/Mutation';
 import Query from '../builder/Query';
-import Batch from '../builder/Batch';
+import CombinedField from '../builder/CombinedField';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 
@@ -18,7 +18,7 @@ const capsulesQuery = new Query('capsules', true)
     .addArgument('limit', 'Int', 5)
     .addFieldList(['status', 'id']);
 
-const combinedQuery = new Batch()
+const combinedQuery = new CombinedField()
     .add(dragonsQuery)
     .add(capsulesQuery);
 

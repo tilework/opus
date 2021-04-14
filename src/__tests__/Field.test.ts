@@ -29,7 +29,7 @@ describe('field is built', () => {
         expect(field).toBeInstanceOf(Field);
     });
 
-    it('adds childs fields in batches', () => {
+    it('adds childs fields as lists', () => {
         const field = new Field('some')
             .addFieldList([
                 'one', 

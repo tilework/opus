@@ -2,7 +2,7 @@ import type { DataType } from '../util/data-type';
 import Mutation from "../builder/Mutation";
 import Query from "../builder/Mutation";
 import Field from '../builder/Field';
-import Batch from '../builder/Batch';
+import CombinedField from '../builder/CombinedField';
 
 const query = new Query('person')
     .addField('name')
@@ -20,7 +20,7 @@ const mutation = new Mutation('someMutation')
     .addField('some')
     .addField('other'); 
 
-const batch = new Batch()
+const combinedRequest = new CombinedField()
     .add(query)
     .add(anotherQuery)
 
@@ -46,8 +46,8 @@ describe('type is properly extracted', () => {
         } catch {}
     });
 
-    it('extracts type from a batch', () => {
-        const returned: DataType<typeof batch> = {} as any;
+    it('extracts type from a combined request', () => {
+        const returned: DataType<typeof combinedRequest> = {} as any;
 
         try {
             returned.car;

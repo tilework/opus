@@ -1,4 +1,4 @@
-import Batch from '../builder/Batch';
+import CombinedField from '../builder/CombinedField';
 import { prepareRequest } from './prepare-document';
 import parseResponse from './parse-response';
 import { executePost } from './post';
@@ -43,7 +43,7 @@ export class Client {
     ): Promise<DataType<typeof rawField>>;
 
     async post<N extends string, RT>(
-        rawField: Batch<RT>,
+        rawField: CombinedField<RT>,
         overrideOptions?: Partial<RequestOptions>
     ): Promise<DataType<typeof rawField>>;
 
@@ -51,10 +51,10 @@ export class Client {
         rawField: any,
         overrideOptions?: Partial<RequestOptions>
     ) {
-        const fieldArray = rawField instanceof Batch ? rawField.getFields() : [rawField];
+        const fieldArray = rawField instanceof CombinedField ? rawField.getFields() : [rawField];
 
         if (!fieldArray.length) {
-            throw new Error('Attempting to post empty batch!');
+            throw new Error('Attempting to post empty field!');
         }
 
         const response = await executePost(
@@ -68,7 +68,7 @@ export class Client {
 
         const parsedResponse = parseResponse(await response.json());
 
-        if (rawField instanceof Batch) {
+        if (rawField instanceof CombinedField) {
             for (const field of rawField.getFields()) {
                 await this.process(field, parsedResponse[field.name], parsedResponse)
             }

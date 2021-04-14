@@ -3,7 +3,7 @@ import Query from './Query';
 import { GraphQlRequestType } from '../client/prepare-document';
 import AbstractField from './AbstractField';
 
-export class Batch<ReturnType> {
+export class CombinedField<ReturnType> {
     type?: GraphQlRequestType;
 
     resultTypeHolder?: ReturnType;
@@ -12,14 +12,14 @@ export class Batch<ReturnType> {
 
     add<Name extends string, FieldReturnType, IsArray extends boolean>(
         field: Query<Name, FieldReturnType, IsArray> | Mutation<Name, FieldReturnType, IsArray>
-    ): Batch<ReturnType & {[k in Name]: IsArray extends true ? FieldReturnType[] : FieldReturnType}> {
+    ): CombinedField<ReturnType & {[k in Name]: IsArray extends true ? FieldReturnType[] : FieldReturnType}> {
         // Handle first field
         if (!this.type) {
             this.type = field.type;
 
-        // Handle attempt to batch queries together with mutations
+        // Handle attempt to combine queries together with mutations
         } else if (this.type !== field.type) {
-            throw new Error('Cannot batch queries and mutations together!');
+            throw new Error('Cannot combine queries and mutations together!');
         }
 
         this.fields.push(field);
@@ -30,4 +30,4 @@ export class Batch<ReturnType> {
     getFields = () => this.fields;
 }
 
-export default Batch;
+export default CombinedField;

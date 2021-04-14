@@ -59,6 +59,22 @@ const dragonsQuery = new Query('dragons', true) // `true` means 'expect array'
     )
 ```
 
+<h4 float="left"> 
+    <img src="https://e.unicode-table.com/orig/41/afffcb1f4ba527f67325f094febfb1.png" height="20">
+    Getting data type from a field
+</h4>
+
+Sometimes it is necessary to explicitly reference the type, which the fetched data will have upon retrieval. A utility type is provided in order to make this possible!
+
+```js
+const query = new Query('person', true)
+    .addFieldList(['name', 'surname']);
+
+let result: DataType<typeof query>;
+
+result = await client.post(query);
+```
+
 <h4 float="left">
     <img src="https://e.unicode-table.com/orig/c6/067075f73e5891479108c2d51d0ff7.png" height="20">
     Calculated fields
@@ -131,7 +147,7 @@ const combinedQueryResult = await client.post(new Batch
 ```
 
 <h4 float="left">
-    <img src="https://e.unicode-table.com/orig/71/6bd8089ef56220c22155843e864262.png" height="20">
+    <img src="https://e.unicode-table.com/orig/a2/7591b29cce40dd113708ef2117fe88.png" height="20">
     Configuring the client
 </h4>
 

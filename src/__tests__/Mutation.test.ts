@@ -8,5 +8,5 @@ describe('mutations are built', () => {
 
         expect(mutation.children.length).toBe(2);
         expect(mutation).toBeInstanceOf(Mutation);
-    })
+    });
 });

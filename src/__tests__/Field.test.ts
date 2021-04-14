@@ -7,7 +7,7 @@ describe('field is built', () => {
             .addField('friends', true);
 
         field.resultTypeHolder.friends;
-    })
+    });
 
     it('adds non-array fields', () => {
         const field = new Field('person')
@@ -16,7 +16,7 @@ describe('field is built', () => {
 
         field.resultTypeHolder.a;
         field.resultTypeHolder.b;
-    })
+    });
 
     it('adds child fields one by one', () => {
         const field = new Field('some')
@@ -69,5 +69,5 @@ describe('field is built', () => {
         const field = new Field('some')
             .addField('thing')
             .addTransformation((some) => 123 as const);
-    })
+    });
 });

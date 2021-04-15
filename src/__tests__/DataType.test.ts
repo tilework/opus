@@ -1,8 +1,4 @@
-import type { DataType } from '../util/data-type';
-import Mutation from "../builder/Mutation";
-import Query from "../builder/Mutation";
-import Field from '../builder/Field';
-import CombinedField from '../builder/CombinedField';
+import { DataType, Mutation, Query, Field, CombinedField } from "../..";
 
 const query = new Query('person')
     .addField('name')

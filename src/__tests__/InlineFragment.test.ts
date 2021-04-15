@@ -1,4 +1,4 @@
-import InlineFragment from "../builder/InlineFragment";
+import { InlineFragment } from "../..";
 
 describe('inline fragment is built', () => {
     it('builds inline fragments', () => {

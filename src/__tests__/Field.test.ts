@@ -1,5 +1,4 @@
-import Field from "../builder/Field";
-import InlineFragment from "../builder/InlineFragment";
+import { Field, InlineFragment } from "../..";
 
 describe('field is built', () => {
     it('adds array fields', () => {

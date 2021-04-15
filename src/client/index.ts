@@ -38,9 +38,19 @@ export class Client {
     getOptions = (): RequestOptions => this.options;
 
     async post<N extends string, RT, A extends boolean>(
-        rawField: Query<N, RT, A> | Mutation<N, RT, A> | CombinedField<RT>,
+        rawField: Query<N, RT, A> | Mutation<N, RT, A>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<DataType<typeof rawField>> {
+    ): Promise<DataType<typeof rawField>>;
+
+    async post<RT>(
+        rawField: CombinedField<RT>,
+        overrideOptions?: Partial<RequestOptions>
+    ): Promise<DataType<typeof rawField>>;
+
+    async post(
+        rawField: any,
+        overrideOptions?: Partial<RequestOptions>
+    ) {
         const fieldArray = rawField instanceof CombinedField ? rawField.getFields() : [rawField];
 
         if (!fieldArray.length) {

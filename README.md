@@ -144,7 +144,7 @@ typeof result.dragons[0].launch_payload_mass; // number
 The `client` provides an opportunity to fetch queries and mutations, as well as fetch combined queries and combined mutations.
 
 ```js
-import client, { CombinedField } from '@tilework/opus';
+import { client, CombinedField } from '@tilework/opus';
 
 // Single requests
 const queryResult = await client.post(someQuery);

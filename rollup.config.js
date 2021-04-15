@@ -1,5 +1,8 @@
 import dts from 'rollup-plugin-dts';
-import esbuild from 'rollup-plugin-esbuild';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
+import babel from "@rollup/plugin-babel";
+import typescript from '@rollup/plugin-typescript';
 
 const pkg = require('./package.json');
 
@@ -11,11 +14,19 @@ const bundle = config => ({
 
 export default [
     bundle({
-        plugins: [esbuild({ minify: true })],
+        plugins: [
+            nodeResolve(), 
+            babel({ babelHelpers: 'runtime' }), 
+            terser(),
+            typescript({
+                target: "es5"
+            }), 
+        ],
         output: [
             {
                 file: pkg.main,
-                format: 'cjs',
+                format: 'umd',
+                name: 'Opus',
                 sourcemap: false
             }
         ]

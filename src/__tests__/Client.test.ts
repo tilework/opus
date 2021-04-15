@@ -1,4 +1,4 @@
-import client, { Field, Mutation, Query, CombinedField } from '../..';
+import { client, Field, Mutation, Query, CombinedField } from '../..';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 

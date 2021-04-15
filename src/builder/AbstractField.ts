@@ -1,4 +1,20 @@
 import type { HigherKindType, FieldDescendantStore } from './hkt';
+import type { InlineFragment } from './InlineFragment';
+import { Field } from './Field';
+
+// Importing InlineFragment as class here causes severe circular dependency issues
+// Prefer importing as type and using this helper function
+const isInlineFragment = (thing: any): thing is InlineFragment<any, any> => {
+    if (typeof thing !== 'object' || !thing.tag) {
+        return false;
+    }
+
+    if (thing.tag === 'InlineFragment') {
+        return true;
+    }
+
+    return false;
+}
 
 export interface Argument {
     name: string;
@@ -150,7 +166,7 @@ export abstract class AbstractField<
     addField(field: unknown): unknown {
         if (typeof field === 'string') {
             this.children.push(new Field(field));
-        } else if (field instanceof Field || field instanceof InlineFragment) {
+        } else if (field instanceof Field || isInlineFragment(field)) {
             this.children.push(field);
         } else {
             throw new Error('Unknown field type!');
@@ -178,5 +194,3 @@ export abstract class AbstractField<
 export default AbstractField;
 
 // Importing assets here prevents circular dependency issues
-import Field from './Field';
-import { InlineFragment } from './InlineFragment';

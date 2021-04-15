@@ -16,7 +16,7 @@ export default [
     bundle({
         plugins: [
             nodeResolve(), 
-            babel({ babelHelpers: 'runtime' }), 
+            babel(), 
             terser(),
             typescript({
                 target: "es5"

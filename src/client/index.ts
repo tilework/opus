@@ -38,19 +38,9 @@ export class Client {
     getOptions = (): RequestOptions => this.options;
 
     async post<N extends string, RT, A extends boolean>(
-        rawField: Query<N, RT, A> | Mutation<N, RT, A>,
+        rawField: Query<N, RT, A> | Mutation<N, RT, A> | CombinedField<RT>,
         overrideOptions?: Partial<RequestOptions>
-    ): Promise<DataType<typeof rawField>>;
-
-    async post<N extends string, RT>(
-        rawField: CombinedField<RT>,
-        overrideOptions?: Partial<RequestOptions>
-    ): Promise<DataType<typeof rawField>>;
-
-    async post(
-        rawField: any,
-        overrideOptions?: Partial<RequestOptions>
-    ) {
+    ): Promise<DataType<typeof rawField>> {
         const fieldArray = rawField instanceof CombinedField ? rawField.getFields() : [rawField];
 
         if (!fieldArray.length) {
@@ -84,7 +74,7 @@ export class Client {
     /**
      * Handles calculating and transforming fields on result
      */
-    async process(field: AbstractField<any, any, any>, result: any, parentResult: any) {
+    protected async process(field: AbstractField<any, any, any>, result: any, parentResult: any) {
         // Prevent calculating for non-object fields from the result
         if (!field.children.length) {
             return;

@@ -13,7 +13,7 @@
     "typings": "dist/opus.d.ts",
     "scripts": {
         "build": "rm -rf dist && rollup -c",
-        "prepare": "npm run build",
+        "prepublishOnly": "npm run build",
         "test": "jest"
     },
     "dependencies": {

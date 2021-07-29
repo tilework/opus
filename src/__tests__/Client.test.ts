@@ -1,4 +1,11 @@
-import { client, Field, Mutation, Query, CombinedField } from '../..';
+import { 
+  client, 
+  Field, 
+  Mutation, 
+  Query, 
+  CombinedField, 
+  InlineFragment
+} from '../../src';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 
@@ -29,8 +36,10 @@ const insertUserMutation = new Mutation('insert_users')
         .addFieldList([
             'id', 
             'name', 
-            'rocket'
-        ])
+            'rocket',
+            // @ts-ignore
+            new InlineFragment('users').addField('timestamp')
+          ])
     );
 
 describe('data is fetched correctly', () => {

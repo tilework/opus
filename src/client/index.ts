@@ -98,7 +98,17 @@ export class Client {
         } else {
             // If has children - process children first
             for (const child of field.children) {
-                await this.process(child, result[child.name], result);
+                if (child.tag === 'InlineFragment') {
+                    for (const fragmentChild of child.children) {
+                        if (!Object.hasOwnProperty.call(result, fragmentChild.name)) {
+                            continue;
+                        }
+
+                        await this.process(fragmentChild, result[fragmentChild.name], result);
+                    }
+                } else {
+                    await this.process(child, result[child.name], result);
+                }
             }
 
             // POSTVISIT - calculate the actual fields

@@ -14,7 +14,7 @@ const anotherQuery = new Query('car')
 
 const mutation = new Mutation('someMutation')
     .addField('some')
-    .addField('other'); 
+    .addField('other');
 
 const combinedRequest = new CombinedField()
     .add(query)

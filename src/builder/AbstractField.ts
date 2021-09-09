@@ -37,9 +37,9 @@ export abstract class AbstractField<
     readonly name: Name;
 
     readonly isArray?: ArrayExpected;
-    
+
     readonly tag: keyof FieldDescendantStore<any, any, any> = 'AbstractField';
-    
+
     alias = '';
 
     children: Array<InlineFragment<any, any> | Field<any, any, any>> = [];
@@ -67,7 +67,7 @@ export abstract class AbstractField<
      */
     setAlias<Alias extends string>(alias: Alias): HigherKindType<
         this['tag'],
-        Alias, 
+        Alias,
         FieldReturnType,
         ArrayExpected
     > {
@@ -90,7 +90,7 @@ export abstract class AbstractField<
         NewFieldName extends string,
         NewFieldType extends any
     >(
-        field: NewFieldName, 
+        field: NewFieldName,
         calculator: (result: FieldReturnType) => NewFieldType
     ): HigherKindType<
         this['tag'],
@@ -127,7 +127,7 @@ export abstract class AbstractField<
         field: NewFieldName,
         isArray?: IsArray
     ): HigherKindType<
-        this['tag'], 
+        this['tag'],
         Name,
         FieldReturnType & {
             [k in NewFieldName]: IsArray extends true
@@ -135,14 +135,14 @@ export abstract class AbstractField<
                 : FetchedFieldItemType
         },
         ArrayExpected
-    > 
+    >
 
     // INLINE FRAGMENT
-    addField<NewField extends InlineFragment<any, any>>( 
+    addField<NewField extends InlineFragment<any, any>>(
         field: NewField
     ): HigherKindType<
-        this['tag'], 
-        Name, 
+        this['tag'],
+        Name,
         FieldReturnType & Partial<NewField['resultTypeHolder']>
     >;
 
@@ -152,11 +152,11 @@ export abstract class AbstractField<
     >(
         field: F
     ): HigherKindType<
-        this['tag'], 
-        Name, 
-        FieldReturnType & { 
+        this['tag'],
+        Name,
+        FieldReturnType & {
             [k in F['name']]: F extends Field<any, any, true>
-                ? F['resultTypeHolder'][] 
+                ? F['resultTypeHolder'][]
                 : F['resultTypeHolder']
         },
         ArrayExpected

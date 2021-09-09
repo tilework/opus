@@ -1,9 +1,9 @@
-import { 
-  client, 
-  Field, 
-  Mutation, 
-  Query, 
-  CombinedField, 
+import {
+  client,
+  Field,
+  Mutation,
+  Query,
+  CombinedField,
   InlineFragment
 } from '../../src';
 
@@ -28,14 +28,14 @@ const combinedQuery = new CombinedField()
 
 const insertUserMutation = new Mutation('insert_users')
     .addArgument('objects', '[users_insert_input!]!', {
-        name: "Yegor", 
+        name: "Yegor",
         rocket: "SomeRocket"
     })
     .addField('affected_rows')
     .addField(new Field('returning', true)
         .addFieldList([
-            'id', 
-            'name', 
+            'id',
+            'name',
             'rocket',
             // @ts-ignore
             new InlineFragment('users').addField('timestamp')

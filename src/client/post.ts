@@ -1,9 +1,9 @@
 import { RequestOptions } from '.';
 import { GraphQLDocument } from './prepare-document';
 
-if (typeof fetch === 'undefined') {
-    var fetch = require('node-fetch');
-}
+const envAgnosticFetch: typeof window.fetch = typeof window === 'undefined'
+    ? require('node-fetch')
+    : window.fetch
 
 export const processHeaders = (headers: any, options: RequestOptions): any => {
     const { headers: additionalHeaders = {} } = options;
@@ -18,9 +18,10 @@ export const postFetch = (
     query: string,
     variables: GraphQLDocument['variables'],
     options: RequestOptions
-): Promise<Response> => fetch(
+): Promise<Response> => envAgnosticFetch(
     options.endpoint,
     {
+        ...options,
         method: 'POST',
         body: JSON.stringify({ query, variables }),
         headers: processHeaders({

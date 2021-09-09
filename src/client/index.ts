@@ -17,8 +17,8 @@ export type Middleware = (response: GraphQlResponse) => unknown;
 
 export type RequestOptions = {
     endpoint: string,
-    headers?: any
-};
+    headers?: Record<string, string>
+} & Omit<RequestInit, 'method' | 'body' | 'headers'>;
 
 export const defaultOptions: RequestOptions = {
     endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql'
@@ -31,7 +31,7 @@ export class Client {
         this.options.endpoint = endpoint;
     };
 
-    setHeaders = (headers: any): void => {
+    setHeaders = (headers: Record<string, string>): void => {
         this.options.headers = headers;
     };
 

@@ -31,7 +31,7 @@ describe('field is built', () => {
     it('adds childs fields as lists', () => {
         const field = new Field('some')
             .addFieldList([
-                'one', 
+                'one',
                 'two'
             ]);
 

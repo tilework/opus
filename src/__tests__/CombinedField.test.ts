@@ -8,7 +8,7 @@ describe('combined fields are built', () => {
         const combinedField = new CombinedField()
             .add(firstQuery)
             .add(secondQuery);
-    
+
         expect(combinedField.getFields().length).toBe(2);
     })
 
@@ -19,7 +19,7 @@ describe('combined fields are built', () => {
         const combinedField = new CombinedField()
             .add(firstMutation)
             .add(secondMutation);
-    
+
         expect(combinedField.getFields().length).toBe(2);
     })
 

@@ -5,8 +5,8 @@ import type InlineFragment from './InlineFragment';
 import type AbstractField from './AbstractField';
 
 export interface FieldDescendantStore<
-    N extends string, 
-    RT, 
+    N extends string,
+    RT,
     A extends boolean
 > {
     Query: Query<N, RT, A>,

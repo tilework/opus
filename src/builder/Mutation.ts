@@ -3,8 +3,8 @@ import { GraphQlRequestType } from "../client/prepare-document";
 import { IRequestable } from "./interface/IRequestable";
 
 class Mutation<
-    Name extends string, 
-    FieldReturnType, 
+    Name extends string,
+    FieldReturnType,
     IsArray extends boolean = false
 > extends AbstractField<Name, FieldReturnType, IsArray> implements IRequestable {
     readonly tag = 'Mutation';

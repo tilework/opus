@@ -7,7 +7,7 @@ export class CombinedField<ReturnType> {
     type?: GraphQlRequestType;
 
     resultTypeHolder?: ReturnType;
-    
+
     protected fields: AbstractField<any, any, any>[] = [];
 
     add<Name extends string, FieldReturnType, IsArray extends boolean>(

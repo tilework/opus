@@ -50,7 +50,7 @@ export const prepareFieldString = (
 };
 
 export const prepareRequest = (
-    fields: AbstractField<any, any, any>[],
+    fields: AbstractField<any, any, any> | AbstractField<any, any, any>[],
     type: GraphQlRequestType
 ): GraphQLDocument => {
     const fieldsArray = Array.isArray(fields) ? fields : [fields];

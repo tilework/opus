@@ -35,8 +35,6 @@ export const parseResponse = (response: GraphQlResponse): any => {
         return checkForErrors(response);
     } catch (e) {
         // throw new, formatted error instead
-        throw new Error(parseError(e));
+        throw new Error(parseError(e as Error));
     }
 };
-
-export default parseResponse;

@@ -1,8 +1,8 @@
-import AbstractField from "./AbstractField";
+import { AbstractField } from "./AbstractField";
 import { GraphQlRequestType } from "../client/prepare-document";
 import { IRequestable } from "./interface/IRequestable";
 
-class Query<
+export class Query<
     Name extends string,
     FieldReturnType,
     IsArray extends boolean = false
@@ -11,5 +11,3 @@ class Query<
 
     readonly type = GraphQlRequestType.Query;
 }
-
-export default Query;

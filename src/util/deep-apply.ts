@@ -1,4 +1,4 @@
-const deepApply = (fn: (obj: any) => any, obj: any): void => {
+export const deepApply = (fn: (obj: any) => any, obj: any): void => {
     if (typeof obj !== 'object') {
         return;
     }
@@ -9,5 +9,3 @@ const deepApply = (fn: (obj: any) => any, obj: any): void => {
         deepApply(fn, obj[key]);
     }
 }
-
-export default deepApply;

@@ -1,6 +1,5 @@
 import type { HigherKindType, FieldDescendantStore } from './hkt';
 import type { InlineFragment } from './InlineFragment';
-import { Field } from './Field';
 
 // Importing InlineFragment as class here causes severe circular dependency issues
 // Prefer importing as type and using this helper function
@@ -191,6 +190,12 @@ export abstract class AbstractField<
     }
 }
 
-export default AbstractField;
+// Declaring Field here to prevent circular dependency issues
 
-// Importing assets here prevents circular dependency issues
+export class Field<
+    Name extends string,
+    FieldReturnType,
+    IsArray extends boolean = false
+> extends AbstractField<Name, FieldReturnType, IsArray> {
+    readonly tag = 'Field';
+}

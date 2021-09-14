@@ -1,4 +1,4 @@
-import AbstractField, { Argument } from '../builder/AbstractField';
+import { Argument, AbstractField } from '../builder/AbstractField';
 
 export enum GraphQlRequestType {
     Mutation = 'mutation',

@@ -1,7 +1,7 @@
-import Mutation from './Mutation';
-import Query from './Query';
+import { Mutation } from './Mutation';
+import { Query } from './Query';
 import { GraphQlRequestType } from '../client/prepare-document';
-import AbstractField from './AbstractField';
+import { AbstractField } from './AbstractField';
 
 export class CombinedField<ReturnType> {
     type?: GraphQlRequestType;
@@ -29,5 +29,3 @@ export class CombinedField<ReturnType> {
 
     getFields = () => this.fields;
 }
-
-export default CombinedField;

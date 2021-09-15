@@ -1,4 +1,4 @@
-import AbstractField from './AbstractField';
+import { AbstractField } from './AbstractField';
 
 export class InlineFragment<
     N extends string,
@@ -10,5 +10,3 @@ export class InlineFragment<
         super(`... on ${name}` as N);
     }
 }
-
-export default InlineFragment;

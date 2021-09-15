@@ -1,8 +1,8 @@
-import AbstractField from "./AbstractField";
+import { AbstractField } from "./AbstractField";
 import { GraphQlRequestType } from "../client/prepare-document";
 import { IRequestable } from "./interface/IRequestable";
 
-class Mutation<
+export class Mutation<
     Name extends string,
     FieldReturnType,
     IsArray extends boolean = false
@@ -11,5 +11,3 @@ class Mutation<
 
     readonly type = GraphQlRequestType.Mutation;
 }
-
-export default Mutation;

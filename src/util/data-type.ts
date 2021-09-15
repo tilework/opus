@@ -1,6 +1,6 @@
-import CombinedField from "../builder/CombinedField";
-import Mutation from "../builder/Mutation";
-import Query from "../builder/Query";
+import { CombinedField } from "../builder/CombinedField";
+import { Mutation } from "../builder/Mutation";
+import { Query } from "../builder/Query";
 import { DeepReadonly } from "./deep-readonly";
 
 export type DataType<

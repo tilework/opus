@@ -15,12 +15,12 @@ const bundle = config => ({
 export default [
     bundle({
         plugins: [
-            nodeResolve(), 
-            babel(), 
+            nodeResolve(),
+            babel(),
             terser(),
             typescript({
                 target: "es5"
-            }), 
+            }),
         ],
         output: [
             {

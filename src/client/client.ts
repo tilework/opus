@@ -100,13 +100,16 @@ export class Client {
             for (const child of field.children) {
                 if (child.tag === 'InlineFragment') {
                     for (const fragmentChild of child.children) {
-                        if (!Object.hasOwnProperty.call(result, fragmentChild.name)) {
+                        if (result === null || !Object.hasOwnProperty.call(result, fragmentChild.name)) {
                             continue;
                         }
 
                         await this.process(fragmentChild, result[fragmentChild.name], result);
                     }
                 } else {
+                    if (result === null || !Object.hasOwnProperty.call(result, child.name)) {
+                        continue;
+                    }
                     await this.process(child, result[child.name], result);
                 }
             }

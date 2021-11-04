@@ -52,7 +52,7 @@ export abstract class AbstractField<
     transformer?: (result: FieldReturnType) => any;
 
     constructor(
-        name: Name, 
+        name: Name,
         isArray?: ArrayExpected
     ) {
         this.name = name;

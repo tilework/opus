@@ -5,7 +5,7 @@ import {
   Query,
   CombinedField,
   InlineFragment
-} from '../';
+} from '../../src';
 
 client.setEndpoint('https://api.spacex.land/graphql/');
 

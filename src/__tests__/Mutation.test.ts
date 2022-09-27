@@ -1,4 +1,4 @@
-import { Mutation } from "../";
+import { Mutation } from "../..";
 
 describe('mutations are built', () => {
     it('builds a mutation', () => {

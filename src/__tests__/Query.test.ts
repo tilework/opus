@@ -1,4 +1,4 @@
-import { Query } from "../";
+import { Query } from "../..";
 
 describe('queries are built', () => {
     it('builds a query', () => {

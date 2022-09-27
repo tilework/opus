@@ -1,4 +1,4 @@
-import { Mutation, Query, CombinedField } from "../";
+import { Mutation, Query, CombinedField } from "../..";
 
 describe('combined fields are built', () => {
     it('builds combined queries', () => {

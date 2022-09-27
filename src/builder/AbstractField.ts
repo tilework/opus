@@ -1,4 +1,4 @@
-import { EmptyObject, StringKeyOf } from 'type-fest';
+import { EmptyObject, StringKeyOf } from '../types';
 import type { HigherKindType, FieldDescendantStore } from './hkt';
 import type { InlineFragment } from './InlineFragment';
 

@@ -2,7 +2,7 @@ import {
     client,
     Field,
     Query,
-} from '../../src';
+} from '../';
 
 /**
  *

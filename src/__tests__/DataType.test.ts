@@ -1,4 +1,4 @@
-import { DataType, Mutation, Query, Field, CombinedField } from "../..";
+import { DataType, Mutation, Query, Field, CombinedField } from "../";
 
 const query = new Query('person')
     .addField('name')

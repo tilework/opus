@@ -1,4 +1,4 @@
-import { Field, InlineFragment } from "../..";
+import { Field, InlineFragment } from "../";
 
 describe('field is built', () => {
     it('adds array fields', () => {

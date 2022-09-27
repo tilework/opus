@@ -1,4 +1,4 @@
-import { client, Query, Field } from '../..';
+import { client, Query, Field } from '../index';
 
 const ONE_KG_IN_LBS = 2.20462;
 

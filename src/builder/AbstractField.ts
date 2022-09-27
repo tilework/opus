@@ -1,3 +1,4 @@
+import { EmptyObject, StringKeyOf } from '../types';
 import type { HigherKindType, FieldDescendantStore } from './hkt';
 import type { InlineFragment } from './InlineFragment';
 
@@ -121,7 +122,8 @@ export abstract class AbstractField<
     // STRING
     addField<
         NewFieldName extends string,
-        IsArray extends boolean = false
+        IsArray extends boolean = false,
+        NewFieldType = FetchedFieldItemType
     >(
         field: NewFieldName,
         isArray?: IsArray
@@ -130,8 +132,8 @@ export abstract class AbstractField<
         Name,
         FieldReturnType & {
             [k in NewFieldName]: IsArray extends true
-                ? FetchedFieldItemType[]
-                : FetchedFieldItemType
+                ? NewFieldType[]
+                : NewFieldType
         },
         ArrayExpected
     >
@@ -175,13 +177,18 @@ export abstract class AbstractField<
     }
 
     addFieldList<
-        NewField extends string
+        NewField extends string,
+        TypeDefinitions extends Record<string, any> = EmptyObject,
     >(
-        fieldList: readonly NewField[]
+        fieldList: TypeDefinitions extends EmptyObject
+            ? readonly NewField[]
+            : StringKeyOf<TypeDefinitions>[]
     ): HigherKindType<
         this['tag'],
         Name,
-        FieldReturnType & { [K in NewField]: FetchedFieldItemType },
+        FieldReturnType & TypeDefinitions extends EmptyObject 
+            ? FieldReturnType & { [K in NewField]: FetchedFieldItemType }
+            : FieldReturnType & TypeDefinitions,
         ArrayExpected
     > {
         fieldList.forEach(this.addField.bind(this));

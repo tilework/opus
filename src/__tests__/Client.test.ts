@@ -55,7 +55,8 @@ describe('data is fetched correctly', () => {
         }
     });
 
-    it('is able to fetch mutations', async () => {
+    // Used service does not provide mutations anymore
+    it.skip('is able to fetch mutations', async () => {
         const result = await client.post(insertUserMutation);
         expect(result).toBeDefined();
 
